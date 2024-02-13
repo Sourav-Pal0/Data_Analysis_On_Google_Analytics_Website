@@ -1,0 +1,93 @@
+BigQuery.queries
+/* 
+SELECT 
+       SUM(visitNumber) AS total_number_of_visit
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+
+SELECT 
+        DISTINCT COUNT(visitId) AS unique_visit
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+
+SELECT SUM(totals.pageviews) AS totals.pageviews
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`
+
+select sum(totals.timeOnSite) / count(distinct session_id) as avgtime
+from page_views
+
+
+SELECT totals.newVisits FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+
+SELECT totals.timeOnSite 
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+
+SELECT totals.bounces 
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+
+SELECT DISTINCT(trafficSource.source) AS source, 
+       COUNT(visitId) no_of_visitid
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+GROUP BY trafficSource.source
+ORDER BY no_of_visitid DESC;
+
+SELECT DISTINCT(trafficSource.medium) AS medium, 
+       COUNT(visitId) AS no_of_visitid
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+GROUP BY trafficSource.medium
+ORDER BY no_of_visitid DESC;
+
+SELECT DISTINCT(device.browser) AS browser_name,
+      COUNT(visitId) AS no_of_visitid
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+GROUP BY browser_name
+ORDER BY no_of_visitid DESC;
+
+SELECT DISTINCT(device.isMobile) 
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`
+
+SELECT 
+       DISTINCT(device.deviceCategory) AS device_category,
+       COUNT(visitId) AS no_of_visitid
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`
+GROUP BY device_category
+ORDER BY no_of_visitid DESC;
+
+What is the average number of transactions per purchaser?
+Calculate the average number of transactions per purchaser for April 2017.
+SELECT
+  (SUM (total_transactions_per_user) / COUNT(fullVisitorId) ) AS avg_total_transactions_per_user
+FROM (
+  SELECT
+    fullVisitorId,
+    SUM (totals.transactions) AS total_transactions_per_user
+  FROM
+    `bigquery-public-data.google_analytics_sample.ga_sessions_*`
+  WHERE
+    _TABLE_SUFFIX BETWEEN '20170701'
+    AND '20170731'
+    AND totals.transactions IS NOT NULL
+  GROUP BY
+    fullVisitorId )
+
+SELECT 
+       geoNetwork.country,
+       COUNT(visitId) AS no_of_visitid
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+GROUP BY geoNetwork.country
+ORDER BY no_of_visitid DESC;
+      
+
+What is the total number of transactions generated per device browser?
+Identify the top 5 browsers used for making transactions in July 2017, listed in descending order by total transactions.
+SELECT
+  device.browser,
+  SUM ( totals.transactions ) AS total_transactions
+FROM
+  `bigquery-public-data.google_analytics_sample.ga_sessions_*`
+WHERE
+  _TABLE_SUFFIX BETWEEN '20170701'
+  AND '20170731'
+GROUP BY
+  device.browser
+ORDER BY
+  total_transactions DESC
+*/
